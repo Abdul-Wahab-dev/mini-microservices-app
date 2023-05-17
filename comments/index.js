@@ -1,9 +1,10 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
-
+app.use(cors());
 const commentsByPostId = {};
 
 app.get("/posts/:id/comments", (req, res) => {
@@ -28,8 +29,6 @@ app.post("/posts/:id/comments", (req, res) => {
 
   commentsByPostId[id] = comments;
   res.status(201).send(comments);
-
-  res.status(201).send(posts[id]);
 });
 
 app.listen(4001, () => {
