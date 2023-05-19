@@ -2,7 +2,7 @@ const express = require("express");
 const { randomBytes } = require("crypto");
 const cors = require("cors");
 const app = express();
-
+const axios = require("axios");
 app.use(express.json());
 app.use(cors());
 const posts = {};
@@ -11,7 +11,7 @@ app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts", async (req, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
 
@@ -20,7 +20,19 @@ app.post("/posts", (req, res) => {
     title,
   };
 
+  await axios.post("http://localhost:4005/events", {
+    type: "POSTCREATED",
+    data: {
+      id,
+      title,
+    },
+  });
   res.status(201).send(posts[id]);
+});
+
+app.post("/events", (req, res) => {
+  console.log("EVENT RECEIVED", req.body.type);
+  res.send({});
 });
 
 app.listen(4000, () => {
