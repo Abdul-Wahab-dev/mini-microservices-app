@@ -29,7 +29,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   });
 
   commentsByPostId[id] = comments;
-  console.log("comment created before");
+
   await axios.post("http://localhost:4005/events", {
     type: "COMMENTCREATED",
     data: {
@@ -39,12 +39,11 @@ app.post("/posts/:id/comments", async (req, res) => {
       status,
     },
   });
-  console.log("comment created before");
+
   res.status(201).send(comments);
 });
 
 app.post("/events", async (req, res) => {
-  console.log("EVENT RECEIVED", req.body.type);
   const { type, data } = req.body;
   if (type === "COMMENTMODERATED") {
     const { id, postId, status, content } = data;

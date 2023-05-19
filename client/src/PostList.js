@@ -7,8 +7,9 @@ export default function PostList() {
 
   const fetchPost = async () => {
     const res = await axios.get("http://localhost:4003/posts");
-    console.log(res.data);
-    setPosts(res.data);
+    if (res) {
+      setPosts(res.data);
+    }
   };
 
   useEffect(() => {
