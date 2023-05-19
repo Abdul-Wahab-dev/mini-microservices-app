@@ -3,8 +3,8 @@ const { randomBytes } = require("crypto");
 const cors = require("cors");
 const app = express();
 const axios = require("axios");
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 const posts = {};
 
 app.get("/posts", (req, res) => {

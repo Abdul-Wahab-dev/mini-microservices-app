@@ -9,6 +9,10 @@ export default function PostCreate() {
     });
     setTitle("");
   };
+
+  const handleChange = (setState) => (event) => {
+    setState(event.target.value);
+  };
   return (
     <div>
       <h1>PostCreate</h1>
@@ -19,7 +23,7 @@ export default function PostCreate() {
             type="text"
             name="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleChange(setTitle)}
           />
         </div>
         <button type="submit">Submit</button>
